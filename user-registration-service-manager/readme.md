@@ -24,3 +24,17 @@ celery -A user_registration_service_redundancia2 worker --loglevel=info
 celery -A ping_service_log worker --loglevel=info
 celery -A failures_with_user_registration_log worker --loglevel=info
 ```
+
+### TODO
+
+1. Hacer que el ping reciba el falg de failure.
+2. Hacer la cola de eventos:
+    2.1 Intento 1 de registro de usuario
+    2.2 usuario registrado.
+    2.3 Intento 2 de registro de usuario por redundancia 1
+    2.4 intento de ping
+    3.5 ping realizado
+3. Hacer el reintento cuando se registra un primer fallo. Entonces llamar a la cola redundancia 1.
+4. Hacer el reintento cuando se registra un segundo fallo. Entonces llamar a la cola redundancia 2.
+5. Hacer cola de queries (aplicando chain, get result)
+6. Crear cola de request and response
