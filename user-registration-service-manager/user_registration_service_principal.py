@@ -9,7 +9,7 @@ def insert_user_in_db(email):
     # Open the file in write mode ("w")
     with open(file_name, "a") as file:
         # Write content into the file
-        file.write(email+",principal"+"\n")
+        file.write(email+";principal"+"\n")
         #raise Exception("Falla a proposito. "+email)
 
 # Define a Celery task
