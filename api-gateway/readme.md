@@ -41,7 +41,7 @@ El servicio del API Gateway estará ahora en ejecución y escuchando en el puert
 El API Gateway está ejecutándose en http://localhost:3000. Para enviar una solicitud al endpoint, puedes hacerlo usando herramientas como curl o  postman:
 
 ```curl
-curl --location 'http://localhost:3000/api-gateway/v1/users' \
+curl --location 'http://localhost:3000/api/v1/users' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "email": "armando.lios@yahoo.com"

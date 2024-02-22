@@ -1,6 +1,6 @@
 from celery import Celery
 
-celery = Celery('ping_logs', broker='redis://localhost:6379/0')
+celery = Celery('ping_logs', broker='redis://localhost:6379/1')
 
 def insert_ping_in_db(ping_id, date):
     file_name = "ping_logs.txt"
