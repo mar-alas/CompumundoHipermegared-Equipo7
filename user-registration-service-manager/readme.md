@@ -27,7 +27,7 @@ celery -A failures_with_user_registration_log worker --loglevel=info
 
 ### TODO
 
-1. Hacer que el ping reciba el falg de failure.
+1. *Hacer que el ping reciba el flag de failure y uuid.
 2. Hacer la cola de eventos:
     2.1 Intento 1 de registro de usuario
     2.2 usuario registrado.
@@ -38,3 +38,10 @@ celery -A failures_with_user_registration_log worker --loglevel=info
 4. Hacer el reintento cuando se registra un segundo fallo. Entonces llamar a la cola redundancia 2.
 5. Hacer cola de queries (aplicando chain, get result)
 6. Crear cola de request and response
+7. *Crear scripts de pyhton que hagan las invocaciones (y almacenar el request) al api gateway de forma masiva haciendo aleatorio el flag de falla y enviando el uuid.
+    7.1 Hacer con ping
+    7.2 hacer con el api de registro
+8. Capturar fechas para medir tiempos de respuesta en:
+    8.1 Desde cliente a servidor.
+    8.2 de servidor a cola
+    8.3 de cola a la BD
