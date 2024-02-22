@@ -26,7 +26,7 @@ class UserResource(Resource):
             if 'simulate_failure' in args and args['simulate_failure']==True:
                 failure_uuid = args['failure_uuid']
                 failure_datetime = str(datetime.datetime.now())
-                raise Exception(str(failure_uuid) + "," + email + "," + str(failure_datetime))
+                raise Exception(str(failure_uuid) + ";" + email + ";" + str(failure_datetime))
 
             registrar_usuario_principal.delay(email)
 
