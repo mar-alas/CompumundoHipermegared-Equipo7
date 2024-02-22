@@ -36,7 +36,7 @@ Gateway running on port 3000
 
 El servicio del API Gateway estará ahora en ejecución y escuchando en el puerto especificado.
 
-## Ejecutar una solicitud
+## Ejecutar una solicitud OPERACION NORMAL
 
 El API Gateway está ejecutándose en http://localhost:3000. Para enviar una solicitud al endpoint, puedes hacerlo usando herramientas como curl o  postman:
 
@@ -47,6 +47,28 @@ curl --location 'http://localhost:3000/api-gateway/v1/users' \
     "email": "armando.lios@yahoo.com"
 }'
 ```
+
+## Ejecutar una solicitud SIMULANDO FALLA a demanda
+
+El API Gateway está ejecutándose en http://localhost:3000. Para enviar una solicitud simulando una falla a demanda al endpoint, puedes hacerlo usando herramientas como curl o  postman:
+
+```curl
+curl --location 'http://127.0.0.1:3000/api/v1/users' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email": "jhon.puentes@yahoo.com",
+    "simulate_failure": true,
+    "failure_uuid": "c3582975-be19-47fd-8a16-cd0eb9533d7e"
+}'
+```
+
+## Ejecutar una solicitud de PING-ECHO
+El API Gateway está ejecutándose en http://localhost:3000. Para enviar una solicitud de MONITOREO con ping-echo al endpoint, puedes hacerlo usando herramientas como curl o  postman:
+
+```curl
+curl --location 'http://127.0.0.1:5000/ping'
+```
+
 
 ## Notas
 1. Puede requerir permisos de administrador o super usuario para ejecutar estos comandos.
