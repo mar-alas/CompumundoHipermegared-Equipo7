@@ -1,3 +1,4 @@
+#celery -A failures_with_user_registration_log worker --loglevel=info
 from celery import Celery
 
 celery = Celery('user_registration_failures_logs', broker='redis://localhost:6379/2')

@@ -1,3 +1,4 @@
+#celery -A ping_service_log worker --loglevel=info
 from celery import Celery
 
 celery = Celery('ping_logs', broker='redis://localhost:6379/1')

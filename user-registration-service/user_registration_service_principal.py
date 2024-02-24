@@ -1,5 +1,5 @@
 from celery import Celery
-
+#celery -A user_registration_service_principal.celery worker --loglevel=info
 # Create a Celery instance
 celery = Celery('tasks', broker='redis://localhost:6379/0')
 

@@ -4,12 +4,29 @@ import string
 import uuid
 from faker import Faker
 import json
+import os
 
 URL = "http://127.0.0.1:3000"
 ENDPOINT = "/api/v1/users"
 ENDPOINT_PING = "/ping"
 NUM_REQUESTS = 10
 PORCENTAJE_FALLO = 0.1
+
+#set a seed for reproducibility
+random.seed(0)
+
+#se borran los archivos del experimento previo en caso de que exista
+file_path_ping_enviados_err = "pruebas_experimento/ping_enviados_err.csv"
+file_path_ping_enviados_no_err = "pruebas_experimento/ping_enviados_no_err.csv"
+file_path_request_usuarios_enviados_err = "pruebas_experimento/request_usuarios_enviados_err.csv"
+file_path_request_usuarios_enviados_no_err = "pruebas_experimento/request_usuarios_enviados_no_err.csv"
+
+if os.path.exists(file_path_ping_enviados_err): os.remove(file_path_ping_enviados_err)
+if os.path.exists(file_path_ping_enviados_no_err): os.remove(file_path_ping_enviados_no_err)
+if os.path.exists(file_path_request_usuarios_enviados_err): os.remove(file_path_request_usuarios_enviados_err)
+if os.path.exists(file_path_request_usuarios_enviados_no_err): os.remove(file_path_request_usuarios_enviados_no_err)
+    
+
 
 
 def correr_prueba_registro():
