@@ -130,3 +130,5 @@ __pytest_cache__/
 
 # Salt-specific
 Salt-Cache/
+user-registration-service-manager/data.txt
+user-registration-service-manager/ping_logs.txt
