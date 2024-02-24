@@ -14,19 +14,17 @@ PORCENTAJE_FALLO = 0.1
 
 #set a seed for reproducibility
 random.seed(0)
+Faker.seed(0)
 
 #se borran los archivos del experimento previo en caso de que exista
-file_path_ping_enviados_err = "pruebas_experimento/ping_enviados_err.csv"
-file_path_ping_enviados_no_err = "pruebas_experimento/ping_enviados_no_err.csv"
-file_path_request_usuarios_enviados_err = "pruebas_experimento/request_usuarios_enviados_err.csv"
-file_path_request_usuarios_enviados_no_err = "pruebas_experimento/request_usuarios_enviados_no_err.csv"
+file_path_ping_enviados = "pruebas_experimento/ping_enviados.csv"
+file_path_request_usuarios_enviados = "pruebas_experimento/request_usuarios_enviados.csv"
 
-if os.path.exists(file_path_ping_enviados_err): os.remove(file_path_ping_enviados_err)
-if os.path.exists(file_path_ping_enviados_no_err): os.remove(file_path_ping_enviados_no_err)
-if os.path.exists(file_path_request_usuarios_enviados_err): os.remove(file_path_request_usuarios_enviados_err)
-if os.path.exists(file_path_request_usuarios_enviados_no_err): os.remove(file_path_request_usuarios_enviados_no_err)
-    
+if os.path.exists(file_path_ping_enviados):
+    os.remove(file_path_ping_enviados)
 
+if os.path.exists(file_path_request_usuarios_enviados):
+    os.remove(file_path_request_usuarios_enviados)
 
 
 def correr_prueba_registro():
@@ -39,8 +37,9 @@ def correr_prueba_registro():
     headers = {
         'Content-Type': 'application/json',
     }
-    positivo = []
-    negativo = []
+    request_enviados=[]
+    request_enviados.append("email;resultado")
+    
     fake = Faker()
     for resultado in bool_list:
         # si resultado es positivo que haga un request que funcione bien
@@ -51,7 +50,7 @@ def correr_prueba_registro():
             }
             response = requests.post(f'{URL}{ENDPOINT}', headers=headers, json=json_data)
             assert response.ok, "Fallo el request"
-            positivo.append(correo)
+            request_enviados.append(correo + ";POSITIVO")
         else:
             # que haga un request con fallo
             json_data = {
@@ -61,8 +60,8 @@ def correr_prueba_registro():
             }
             response = requests.post(f'{URL}{ENDPOINT}', headers=headers, json=json_data)
             assert response.ok, "Fallo el request"
-            negativo.append(correo)
-    return positivo, negativo
+            request_enviados.append(correo + ";NEGATIVO")
+    return request_enviados
 
 
 def guardar_logs(lista, archivo):
@@ -81,26 +80,26 @@ def correr_prueba_ping():
     headers = {
         'Content-Type': 'application/json',
     }
-    positivo = []
-    negativo = []
+    pings_enviados = []
+    pings_enviados.append("ping_id;ping_datetime;resultado")
+
     for resultado in bool_list:
         # si resultado es positivo que haga un request que funcione bien
         if resultado:
             response = requests.get(f'{URL}{ENDPOINT_PING}', headers=headers)
             assert response.ok, "Fallo el request"
             data = json.loads(response.text)
-            positivo.append(f"{data['ping_id']};{data['ping_datetime']}")
+            pings_enviados.append(f"{data['ping_id']};{data['ping_datetime']};POSITIVO")
         else:
             # que haga un request con fallo
             response = requests.get(f'{URL}{ENDPOINT_PING}?simulate_failure', headers=headers)
             assert response.ok, "Fallo el request"
             data = json.loads(response.text)
-            negativo.append(f"{data['ping_id']};{data['ping_datetime']}")
-    return positivo, negativo
+            pings_enviados.append(f"{data['ping_id']};{data['ping_datetime']};NEGATIVO")
+    return pings_enviados
 
-positivo, negativo = correr_prueba_registro()
-guardar_logs(positivo, "pruebas_experimento/request_usuarios_enviados_no_err.csv")
-guardar_logs(negativo, "pruebas_experimento/request_usuarios_enviados_err.csv")
-positivo, negativo = correr_prueba_ping()
-guardar_logs(positivo, "pruebas_experimento/ping_enviados_no_err.csv")
-guardar_logs(negativo, "pruebas_experimento/ping_enviados_err.csv")
+request_enviados = correr_prueba_registro()
+guardar_logs(request_enviados, "pruebas_experimento/request_usuarios_enviados.csv")
+
+pings_enviados = correr_prueba_ping()
+guardar_logs(pings_enviados, "pruebas_experimento/ping_enviados.csv")
