@@ -20,12 +20,19 @@ Faker.seed(0)
 #se borran los archivos del experimento previo en caso de que exista
 file_path_ping_enviados = "pruebas_experimento/ping_enviados.csv"
 file_path_request_usuarios_enviados = "pruebas_experimento/request_usuarios_enviados.csv"
+file_path_ping_logs = "user-registration-service/ping_logs.csv"
+file_path_user_registration_logs = "user-registration-service/user_registration_logs.csv"
+file_path_usuarios_db = "user-registration-service/usuarios_db.csv"
+file_path_user_registration_failures_logs = "user-registration-service/user_registration_failures_logs.csv"
 
-if os.path.exists(file_path_ping_enviados):
-    os.remove(file_path_ping_enviados)
+if os.path.exists(file_path_ping_enviados): os.remove(file_path_ping_enviados)
+if os.path.exists(file_path_request_usuarios_enviados): os.remove(file_path_request_usuarios_enviados)
+if os.path.exists(file_path_ping_logs): os.remove(file_path_ping_logs)
+if os.path.exists(file_path_user_registration_logs): os.remove(file_path_user_registration_logs)
+if os.path.exists(file_path_usuarios_db): os.remove(file_path_usuarios_db)
+if os.path.exists(file_path_user_registration_failures_logs): os.remove(file_path_user_registration_failures_logs)
 
-if os.path.exists(file_path_request_usuarios_enviados):
-    os.remove(file_path_request_usuarios_enviados)
+
 
 
 def correr_prueba_registro():
