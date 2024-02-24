@@ -45,7 +45,7 @@ def correr_prueba_registro():
     for resultado in bool_list:
         # si resultado es positivo que haga un request que funcione bien
         correo = fake.email()
-        fecha = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        fecha = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
         if resultado:
             json_data = {
                 'email': correo,
