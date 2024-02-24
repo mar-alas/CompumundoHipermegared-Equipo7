@@ -134,5 +134,4 @@ user-registration-service-manager/data.txt
 user-registration-service-manager/ping_logs.txt
 
 user-registration-service/*.txt
-user-registration-service/*.csv
 !user-registration-service/requirements.txt
