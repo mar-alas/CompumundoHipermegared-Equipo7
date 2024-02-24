@@ -4,7 +4,7 @@ celery = Celery('user_registration_failures_logs', broker='redis://localhost:637
 
 def insert_failure_in_db(failure_data):
     file_name = "user_registration_failures_logs.csv"
-    with open(file_name, "a") as file:
+    with open(file_name, mode='a', encoding='utf-8') as file:
         file.write(failure_data+"\n")
 
 

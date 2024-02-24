@@ -7,7 +7,7 @@ def insert_user_in_db(email):
     file_name = "usuarios_db.csv"
     
     # Open the file in write mode ("w")
-    with open(file_name, "a") as file:
+    with open(file_name, mode='a', encoding='utf-8') as file:
         # Write content into the file
         file.write(email+",redundancia1"+"\n")
         #raise Exception("Falla a proposito. "+email)
