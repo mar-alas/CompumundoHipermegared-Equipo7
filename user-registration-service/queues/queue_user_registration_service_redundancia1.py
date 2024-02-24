@@ -15,6 +15,6 @@ def insert_user_in_db(email):
 
 
 # Define a Celery task
-@celery.task(name="queues.queue_user_registration_service_redundancia2.registrar_usuario_redundancia1")
+@celery.task(name="queues.queue_user_registration_service_redundancia1.registrar_usuario_redundancia1")
 def registrar_usuario_redundancia1(email):
     insert_user_in_db(email)
