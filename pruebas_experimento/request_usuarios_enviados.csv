@@ -1,11 +1,11 @@
-email;resultado
-achang@example.org;POSITIVO
-tammy76@example.com;POSITIVO
-nhoward@example.net;POSITIVO
-juancampos@example.net;POSITIVO
-vanessa89@example.org;POSITIVO
-corey15@example.com;POSITIVO
-gomezleslie@example.net;POSITIVO
-tammywoods@example.net;NEGATIVO
-bryan80@example.org;POSITIVO
-ypage@example.net;POSITIVO
+fecha;email;resultado
+2024-02-24 10:56:10;achang@example.org;POSITIVO
+2024-02-24 10:56:10;tammy76@example.com;POSITIVO
+2024-02-24 10:56:10;nhoward@example.net;POSITIVO
+2024-02-24 10:56:10;juancampos@example.net;POSITIVO
+2024-02-24 10:56:10;vanessa89@example.org;POSITIVO
+2024-02-24 10:56:10;corey15@example.com;POSITIVO
+2024-02-24 10:56:10;gomezleslie@example.net;POSITIVO
+2024-02-24 10:56:10;tammywoods@example.net;NEGATIVO
+2024-02-24 10:56:10;bryan80@example.org;POSITIVO
+2024-02-24 10:56:10;ypage@example.net;POSITIVO

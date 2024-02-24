@@ -5,6 +5,7 @@ import uuid
 from faker import Faker
 import json
 import os
+import datetime
 
 URL = "http://127.0.0.1:3000"
 ENDPOINT = "/api/v1/users"
@@ -38,19 +39,20 @@ def correr_prueba_registro():
         'Content-Type': 'application/json',
     }
     request_enviados=[]
-    request_enviados.append("email;resultado")
+    request_enviados.append("fecha;email;resultado")
     
     fake = Faker()
     for resultado in bool_list:
         # si resultado es positivo que haga un request que funcione bien
         correo = fake.email()
+        fecha = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         if resultado:
             json_data = {
                 'email': correo,
             }
             response = requests.post(f'{URL}{ENDPOINT}', headers=headers, json=json_data)
             assert response.ok, "Fallo el request"
-            request_enviados.append(correo + ";POSITIVO")
+            request_enviados.append(fecha + ";" + correo + ";POSITIVO")
         else:
             # que haga un request con fallo
             json_data = {
@@ -60,7 +62,7 @@ def correr_prueba_registro():
             }
             response = requests.post(f'{URL}{ENDPOINT}', headers=headers, json=json_data)
             assert response.ok, "Fallo el request"
-            request_enviados.append(correo + ";NEGATIVO")
+            request_enviados.append(fecha + ";" + correo + ";NEGATIVO")
     return request_enviados
 
 
