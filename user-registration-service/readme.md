@@ -23,6 +23,7 @@ celery -A user_registration_service_redundancia1 worker --loglevel=info
 celery -A user_registration_service_redundancia2 worker --loglevel=info
 celery -A ping_service_log worker --loglevel=info
 celery -A failures_with_user_registration_log worker --loglevel=info
+celery -A failures_ping_service_log worker --loglevel=info
 ```
 
 ### TODO
@@ -39,8 +40,8 @@ celery -A failures_with_user_registration_log worker --loglevel=info
 5. Hacer cola de queries (aplicando chain, get result)
 6. Crear cola de request and response
 7. *Crear scripts de pyhton que hagan las invocaciones (y almacenar el request) al api gateway de forma masiva haciendo aleatorio el flag de falla y enviando el uuid.
-    7.1 Hacer con ping
-    7.2 hacer con el api de registro
+    7.1 Hacer con ping (Maria)
+    7.2 hacer con el api de registro - escribir en 2 archivo
 8. Capturar fechas para medir tiempos de respuesta en:
     8.1 Desde cliente a servidor.
     8.2 de servidor a cola
