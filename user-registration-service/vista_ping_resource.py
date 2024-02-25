@@ -1,4 +1,5 @@
 from flask_restful import Resource, reqparse
+from flask import Flask, request
 import uuid
 import datetime
 
@@ -10,11 +11,8 @@ class PingResource(Resource):
     def get(self):
         new_ping_id = str(uuid.uuid4())
         new_ping_datetime = str(datetime.datetime.now())
-        parser = reqparse.RequestParser()
-        parser.add_argument('simulate_failure', type=bool, required=False)
-        args = parser.parse_args()
         try:
-            if 'simulate_failure' in args and args['simulate_failure'] is True:
+            if 'simulate_failure' in  request.args:
                 raise Exception(str(new_ping_id) + ";" + str(new_ping_datetime))
             else:
                 registrar_ping_recibido.delay(ping_id=new_ping_id,

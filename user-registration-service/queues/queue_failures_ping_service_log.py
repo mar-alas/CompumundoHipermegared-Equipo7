@@ -21,6 +21,6 @@ def insert_ping_in_db_fallos(error):
         file.write(f"{error}\n")
 
 
-@celery.task(name="queues.failures_ping_service_log.registrar_ping_falla")
+@celery.task(name="queues.queue_failures_ping_service_log.registrar_ping_falla")
 def registrar_ping_falla(error):
     insert_ping_in_db_fallos(error)

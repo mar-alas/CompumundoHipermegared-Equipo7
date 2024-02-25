@@ -19,6 +19,6 @@ def insert_ping_in_db(ping_id, date):
 
 
 
-@celery.task(name="queues.ping_service_log.registrar_ping_recibido")
+@celery.task(name="queues.queue_ping_service_log.registrar_ping_recibido")
 def registrar_ping_recibido(ping_id, ping_datetime):
     insert_ping_in_db(ping_id, ping_datetime)

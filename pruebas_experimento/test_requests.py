@@ -22,6 +22,7 @@ Faker.seed(0)
 #se borran los archivos del experimento previo en caso de que exista
 file_path_ping_enviados = "pruebas_experimento/ping_enviados.csv"
 file_path_request_usuarios_enviados = "pruebas_experimento/request_usuarios_enviados.csv"
+file_path_request_usuarios_enviados_r2 = "pruebas_experimento/request_usuarios_enviados_r2.csv"
 
 file_path_ping_logs = "user-registration-service/ping_logs.csv"
 file_path_user_registration_logs = "user-registration-service/user_registration_logs.csv"
@@ -38,12 +39,10 @@ if os.path.exists(file_path_user_registration_failures_logs): os.remove(file_pat
 if os.path.exists(file_path_ping_logs_error): os.remove(file_path_ping_logs_error)
 
 
-
-
-def correr_prueba_registro():
+def correr_prueba_registro(simulate_failure):
     fallos = int(NUM_REQUESTS * PORCENTAJE_FALLO)
     print(f"Numero de request a generar {NUM_REQUESTS} para registrar usuarios "
-          "con un porcentaje de fallo de {PORCENTAJE_FALLO} equivalente a {fallos} fallos")
+          f"con un porcentaje de fallo de {PORCENTAJE_FALLO} equivalente a {fallos} fallos")
     bool_list = [False] * fallos + [True] * (NUM_REQUESTS - fallos)
     random.shuffle(bool_list)
 
@@ -81,7 +80,9 @@ def correr_prueba_registro():
             # que haga un request con fallo
             json_data = {
                 'email': correo,
-                'simulate_failure': True,
+                'simulate_failure': simulate_failure["simulate_failure"],
+                'simulate_failure_r1': simulate_failure["simulate_failure_r1"],
+                # 'simulate_failure_r2': simulate_failure["simulate_failure_r2"],
                 "failure_uuid": str(uuid.uuid4())
             }
             response = requests.post(f'{URL}{ENDPOINT}', headers=headers, json=json_data)
@@ -135,8 +136,13 @@ def correr_prueba_ping():
             pings_enviados.append(f"{data['ping_id']};{data['ping_datetime']};NEGATIVO")
     return pings_enviados
 
-request_enviados = correr_prueba_registro()
-guardar_logs(request_enviados, "pruebas_experimento/request_usuarios_enviados.csv")
+simulate_failure = {"simulate_failure": True, "simulate_failure_r1": False, "simulate_failure_r3": False}
+request_enviados = correr_prueba_registro(simulate_failure)
+guardar_logs(request_enviados, file_path_request_usuarios_enviados)
+
+simulate_failure = {"simulate_failure": False, "simulate_failure_r1": True, "simulate_failure_r3": False}
+request_enviados = correr_prueba_registro(simulate_failure)
+guardar_logs(request_enviados, file_path_request_usuarios_enviados_r2)
 
 pings_enviados = correr_prueba_ping()
-guardar_logs(pings_enviados, "pruebas_experimento/ping_enviados.csv")
+guardar_logs(pings_enviados, file_path_ping_enviados)
