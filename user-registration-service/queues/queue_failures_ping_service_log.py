@@ -3,7 +3,7 @@
 from celery import Celery
 import os
 
-celery = Celery('ping_logs', broker='redis://localhost:6379/4')
+celery = Celery('ping_logs', broker='redis://localhost:6379/6')
 
 
 def insert_ping_in_db_fallos(error):
