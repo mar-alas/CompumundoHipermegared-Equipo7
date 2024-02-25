@@ -30,7 +30,7 @@ URL = "http://127.0.0.1:3000"
 ENDPOINT = "/api/v1/users"
 ENDPOINT_PING = "/ping"
 NUM_REQUESTS = 1000
-PORCENTAJE_FALLO = 0.8
+PORCENTAJE_FALLO = 0.1
 
 
 
@@ -70,7 +70,7 @@ def correr_prueba_registro():
 
     fake = Faker()
     for _ in range(NUM_REQUESTS):
-        time.sleep(0.1)
+        # time.sleep(0.1)
         correo = fake.email()
         fecha = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
 
