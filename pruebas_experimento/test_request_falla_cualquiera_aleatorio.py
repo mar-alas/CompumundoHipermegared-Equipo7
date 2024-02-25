@@ -109,35 +109,37 @@ def guardar_logs(lista, archivo):
 
 
 def correr_prueba_ping():
-    fallos = int(NUM_REQUESTS * PORCENTAJE_FALLO)
     print(f"Numero de PING requests a generar {NUM_REQUESTS} con un porcentaje "
-          f"de fallo de {PORCENTAJE_FALLO} equivalente a {fallos} fallos")
-    bool_list = [False] * fallos + [True] * (NUM_REQUESTS - fallos)
-    random.shuffle(bool_list)
+          f"de fallo de {PORCENTAJE_FALLO*100}%")
 
-    headers = {
-        'Content-Type': 'application/json',
-    }
-    pings_enviados = []
-    pings_enviados.append("ping_id;ping_datetime;resultado")
+    headers = {'Content-Type': 'application/json'}
+    pings_enviados = ["ping_id;ping_datetime;resultado"]
 
-    for resultado in bool_list:
-        # si resultado es positivo que haga un request que funcione bien
-        if resultado:
-            response = requests.get(f'{URL}{ENDPOINT_PING}', headers=headers)
-            assert response.ok, "Fallo el request"
-            data = json.loads(response.text)
-            pings_enviados.append(f"{data['ping_id']};{data['ping_datetime']};POSITIVO")
-        else:
-            # que haga un request con fallo
-            response = requests.get(f'{URL}{ENDPOINT_PING}?simulate_failure', headers=headers)
-            assert response.ok, "Fallo el request"
-            data = json.loads(response.text)
-            pings_enviados.append(f"{data['ping_id']};{data['ping_datetime']};NEGATIVO")
+    for _ in range(NUM_REQUESTS):
+        peso_fallo = PORCENTAJE_FALLO * 100
+        peso_exito = 100 - peso_fallo
+
+        simulate_failure = random.choices([True, False], weights=[peso_fallo, peso_exito], k=1)[0]
+        simulate_failure_r1 = random.choices([True, False], weights=[peso_fallo, peso_exito], k=1)[0]
+        simulate_failure_r2 = random.choices([True, False], weights=[peso_fallo, peso_exito], k=1)[0]
+
+        params = {
+            'simulate_failure': simulate_failure,
+            'simulate_failure_r1': simulate_failure_r1,
+            'simulate_failure_r2': simulate_failure_r2,
+            "failure_uuid": str(uuid.uuid4())
+        }
+        response = requests.get(f'{URL}{ENDPOINT_PING}', headers=headers, params=params)
+
+        assert response.ok, "Fallo el request"
+        data = response.json()
+        resultado_str = "POSITIVO" if not any([simulate_failure, simulate_failure_r1, simulate_failure_r2]) else "NEGATIVO"
+        pings_enviados.append(f"{data['ping_id']};{data['ping_datetime']};{resultado_str}")
+
     return pings_enviados
 
 request_enviados = correr_prueba_registro()
 guardar_logs(request_enviados, "pruebas_experimento/test_request_falla_cualquiera_aleatorio.csv")
 
-# pings_enviados = correr_prueba_ping()
-# guardar_logs(pings_enviados, "pruebas_experimento/ping_enviados.csv")
+pings_enviados = correr_prueba_ping()
+guardar_logs(pings_enviados, "pruebas_experimento/ping_enviados.csv")
