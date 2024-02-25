@@ -42,20 +42,39 @@ Faker.seed(0)
 file_path_ping_enviados = "pruebas_experimento/ping_enviados.csv"
 file_path_request_usuarios_enviados = "pruebas_experimento/test_request_falla_cualquiera_aleatorio.csv"
 
-file_path_ping_logs = "user-registration-service/ping_logs.csv"
-file_path_user_registration_logs = "user-registration-service/user_registration_logs.csv"
-file_path_usuarios_db = "user-registration-service/usuarios_db.csv"
-file_path_user_registration_failures_logs = "user-registration-service/user_registration_failures_logs.csv"
-file_path_ping_logs_error = "user-registration-service/ping_logs_error.csv"
+file_path_ping_logs = "user-registration-service/queues/database/ping_logs.csv"
+file_path_user_registration_logs = "user-registration-service/queues/database/user_registration_logs.csv"
+file_path_usuarios_db = "user-registration-service/queues/database/usuarios_db.csv"
+file_path_user_registration_failures_logs = "user-registration-service/queues/database/user_registration_failures_logs.csv"
+file_path_ping_logs_error = "user-registration-service/queues/database/ping_logs_error.csv"
 
-if os.path.exists(file_path_ping_enviados): os.remove(file_path_ping_enviados)
-if os.path.exists(file_path_request_usuarios_enviados): os.remove(file_path_request_usuarios_enviados)
-if os.path.exists(file_path_ping_logs): os.remove(file_path_ping_logs)
-if os.path.exists(file_path_user_registration_logs): os.remove(file_path_user_registration_logs)
-if os.path.exists(file_path_usuarios_db): os.remove(file_path_usuarios_db)
-if os.path.exists(file_path_user_registration_failures_logs): os.remove(file_path_user_registration_failures_logs)
-if os.path.exists(file_path_ping_logs_error): os.remove(file_path_ping_logs_error)
+if os.path.exists(file_path_ping_enviados):
+    os.remove(file_path_ping_enviados)
+    print(f"Archivo {file_path_ping_enviados} borrado con exito")
 
+if os.path.exists(file_path_request_usuarios_enviados):
+    os.remove(file_path_request_usuarios_enviados)
+    print(f"Archivo {file_path_request_usuarios_enviados} borrado con exito")
+
+if os.path.exists(file_path_ping_logs):
+    os.remove(file_path_ping_logs)
+    print(f"Archivo {file_path_ping_logs} borrado con exito")
+
+if os.path.exists(file_path_user_registration_logs):
+    os.remove(file_path_user_registration_logs)
+    print(f"Archivo {file_path_user_registration_logs} borrado con exito")
+
+if os.path.exists(file_path_usuarios_db):
+    os.remove(file_path_usuarios_db)
+    print(f"Archivo {file_path_usuarios_db} borrado con exito")
+
+if os.path.exists(file_path_user_registration_failures_logs):
+    os.remove(file_path_user_registration_failures_logs)
+    print(f"Archivo {file_path_user_registration_failures_logs} borrado con exito")
+
+if os.path.exists(file_path_ping_logs_error):
+    os.remove(file_path_ping_logs_error)
+    print(f"Archivo {file_path_ping_logs_error} borrado con exito")
 
 def correr_prueba_registro():
     fallos = int(NUM_REQUESTS * PORCENTAJE_FALLO)

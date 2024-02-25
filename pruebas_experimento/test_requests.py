@@ -12,7 +12,7 @@ import json
 URL = "http://127.0.0.1:3000"
 ENDPOINT = "/api/v1/users"
 ENDPOINT_PING = "/ping"
-NUM_REQUESTS = 100
+NUM_REQUESTS = 1000
 PORCENTAJE_FALLO = 0.1
 
 #set a seed for reproducibility
@@ -21,8 +21,8 @@ Faker.seed(0)
 
 #se borran los archivos del experimento previo en caso de que exista
 file_path_ping_enviados = "pruebas_experimento/ping_enviados.csv"
-file_path_request_usuarios_enviados = "pruebas_experimento/request_usuarios_enviados.csv"
-file_path_request_usuarios_enviados_r2 = "pruebas_experimento/request_usuarios_enviados_r2.csv"
+file_path_request_usuarios_enviados_fallacompprinc = "pruebas_experimento/request_usuarios_enviados_fallacompprinc.csv"
+file_path_request_usuarios_enviados_fallaredund1 = "pruebas_experimento/request_usuarios_enviados_fallaredund1.csv"
 
 file_path_ping_logs = "user-registration-service/queues/database/ping_logs.csv"
 file_path_user_registration_logs = "user-registration-service/queues/database/user_registration_logs.csv"
@@ -34,13 +34,13 @@ if os.path.exists(file_path_ping_enviados):
     os.remove(file_path_ping_enviados)
     print(f"Archivo {file_path_ping_enviados} borrado con exito")
 
-if os.path.exists(file_path_request_usuarios_enviados):
-    os.remove(file_path_request_usuarios_enviados)
-    print(f"Archivo {file_path_request_usuarios_enviados} borrado con exito")
+if os.path.exists(file_path_request_usuarios_enviados_fallacompprinc):
+    os.remove(file_path_request_usuarios_enviados_fallacompprinc)
+    print(f"Archivo {file_path_request_usuarios_enviados_fallacompprinc} borrado con exito")
 
-if os.path.exists(file_path_request_usuarios_enviados_r2):
-    os.remove(file_path_request_usuarios_enviados_r2)
-    print(f"Archivo {file_path_request_usuarios_enviados_r2} borrado con exito")
+if os.path.exists(file_path_request_usuarios_enviados_fallaredund1):
+    os.remove(file_path_request_usuarios_enviados_fallaredund1)
+    print(f"Archivo {file_path_request_usuarios_enviados_fallaredund1} borrado con exito")
 
 if os.path.exists(file_path_ping_logs):
     os.remove(file_path_ping_logs)
@@ -160,13 +160,13 @@ def correr_prueba_ping():
             pings_enviados.append(f"{data['ping_id']};{data['ping_datetime']};NEGATIVO")
     return pings_enviados
 
-simulate_failure = {"simulate_failure": True, "simulate_failure_r1": False, "simulate_failure_r3": False}
+simulate_failure = {"simulate_failure": True, "simulate_failure_r1": False, "simulate_failure_r2": False}
 request_enviados = correr_prueba_registro(simulate_failure)
-guardar_logs(request_enviados, file_path_request_usuarios_enviados)
+guardar_logs(request_enviados, file_path_request_usuarios_enviados_fallacompprinc)
 
-simulate_failure = {"simulate_failure": False, "simulate_failure_r1": True, "simulate_failure_r3": False}
+simulate_failure = {"simulate_failure": False, "simulate_failure_r1": True, "simulate_failure_r2": False}
 request_enviados = correr_prueba_registro(simulate_failure)
-guardar_logs(request_enviados, file_path_request_usuarios_enviados_r2)
+guardar_logs(request_enviados, file_path_request_usuarios_enviados_fallaredund1)
 
 pings_enviados = correr_prueba_ping()
 guardar_logs(pings_enviados, file_path_ping_enviados)
