@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_restful import Api
-from vistas.vista_ping_resource import PingResource
-from vistas.vista_user_resource import UserResource
+from vista_user_resource import UserResource
+from vista_ping_resource import PingResource
 
 app = Flask(__name__)
 api = Api(app)
