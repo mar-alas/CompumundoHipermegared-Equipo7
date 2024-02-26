@@ -7,6 +7,10 @@ Este es el repositorio de trabajo del equipo #7 para la asignatura de Arquitectu
 - Daniel Gamez
 - Jhon Puentes
 
+## Modelo de componentes
+![image](https://github.com/mar-alas/CompumundoHipermegared-Equipo7/assets/142593813/fa692d96-8da8-468b-afdc-459253d85f21)
+
+
 ## Ejecucion
 
 ### API gateway
