@@ -10,7 +10,7 @@ import pyotp
 # generate_2fa_code(user_name="maria")
 
 # para testing, el codigo lo vamos a generar con esto:
-codigo_generado = pyotp.parse_uri('otpauth://totp/GeeksforGeeks:maria?secret=GeeksforGeeksIsBestForEverything&issuer=GeeksforGeeks')
+codigo_generado = pyotp.parse_uri('otpauth://totp/ExperimentoSeguridad:maria?secret=UniandesArquitectura&issuer=ExperimentoSeguridad')
 print(codigo_generado.now())
 
 codigo_recibido = input("Digite su codigo: (el codigo que se imprine en la linea anterior)")
