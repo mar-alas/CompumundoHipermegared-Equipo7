@@ -139,3 +139,4 @@ user-registration-service/*.txt
 #csv
 .csv
 *.csv
+node_modules/

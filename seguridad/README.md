@@ -17,7 +17,7 @@ Este es el repositorio de trabajo del equipo #7 para la asignatura de Arquitectu
 ### API Gateway
 Dentro del directorio /api-gateway-service ejecute:
 ```bash
-node gateway.js
+npm start
 ```
 
 ### Rest API
