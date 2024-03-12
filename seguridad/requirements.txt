@@ -34,3 +34,5 @@ vine==5.1.0
 wcwidth==0.2.13
 Werkzeug==3.0.1
 zipp==3.17.0
+qrcode==7.4.2
+pyotp==2.9.0
