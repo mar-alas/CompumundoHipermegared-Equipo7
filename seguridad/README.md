@@ -25,9 +25,9 @@ npm start
 ```
 
 ### Rest API
-Dentro del directorio / ejecute
+Dentro del directorio /seguridad ejecute (paso 2: hacer el de los datos del deportista y tener un api central)
 ```bash
-python3 auth_2fa.py 
+python3.9 microservicios/user_login/user_login_service.py
 ```
 
 ### Inciar Docker Desktop o Docker Daemon
@@ -44,6 +44,17 @@ docker run -p 6379:6379 -it redis/redis-stack:latest
 ### Colas 
 
 ```
-celery -A 
+celery -A queue_user_login worker --loglevel=info
 celery -A 
 ```
+
+## Correr el comando de curl para inicial sesion
+
+### Comandos: 
+curl --location 'http://127.0.0.1:5000/login' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "username": "maria",
+    "password": "password1",
+    "code": "1234"
+}'
