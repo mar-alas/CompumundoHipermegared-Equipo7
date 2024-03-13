@@ -137,6 +137,6 @@ user-registration-service/*.txt
 !user-registration-service/requirements.txt
 
 #csv
-.csv
-*.csv
+#.csv
+#*.csv
 node_modules/
