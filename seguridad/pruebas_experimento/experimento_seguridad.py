@@ -8,7 +8,7 @@ import os
 import datetime
 import time
 import json
-from seguridad.pruebas_experimento.pruebas_utils import borrar_archivos_previo_experimento
+from seguridad.pruebas_experimento.experimento_utils import borrar_archivos_previo_experimento
 
 URL = "http://127.0.0.1:3000"
 ENDPOINT = "/api/v1/users"
