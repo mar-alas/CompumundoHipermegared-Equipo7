@@ -1,3 +1,3 @@
-2024-03-12 20:15:47 ALERTA Usuarios con más de 3 logins no exitosos
-2024-03-12 20:15:49 ALERTA Usuarios con más de 3 logins no exitosos
-2024-03-12 20:15:51 ALERTA Usuarios con más de 3 logins no exitosos
+ ALERTA Usuarios con mas de 3 logins no exitosos
+ ALERTA Usuarios con mas de 3 logins no exitosos
+ ALERTA Usuarios con mas de 3 logins no exitosos

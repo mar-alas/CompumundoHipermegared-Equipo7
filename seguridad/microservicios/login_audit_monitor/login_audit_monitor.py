@@ -8,9 +8,13 @@ umbral_login_no_exitoso = 3
 
 
 ruta_logs_auditor="seguridad/microservicios/login_audit_monitor/logs_login_audit_monitor.txt"
+ruta_logs_auditor_csv="seguridad/microservicios/login_audit_monitor/logs_login_audit_monitor.csv"
 
 if os.path.exists(ruta_logs_auditor):
             os.remove(ruta_logs_auditor)
+
+if os.path.exists(ruta_logs_auditor_csv):
+            os.remove(ruta_logs_auditor_csv)
 
 ruta_csv="seguridad/microservicios/login_audit_monitor/login_logs.csv"
 login_logs = pd.read_csv(ruta_csv, sep=';')
@@ -24,12 +28,17 @@ def revision_logins_no_exitosos():
     fecha=time.strftime("%Y-%m-%d %H:%M:%S")
 
     if not logins_no_exitosos_por_usuario_sospechosos.empty:
-        mensaje=fecha + " ALERTA Usuarios con más de "+ str(umbral_login_no_exitoso) +" logins no exitosos"
-        print(mensaje)
+        mensaje= " ALERTA Usuarios con mas de "+ str(umbral_login_no_exitoso) +" logins no exitosos"
+        print(fecha + mensaje)
         with open(ruta_logs_auditor, 'a') as f:
             f.write(mensaje + "\n")
+
+        existe_csv=os.path.exists(ruta_logs_auditor_csv)
+        df_log = pd.DataFrame({'Fecha': [fecha],'Tipo_Alerta':'MULTIPLE_LOGINS', 'Mensaje': [mensaje]})
+        df_log.to_csv(ruta_logs_auditor_csv, mode='a', header=not(existe_csv), index=False, sep=';')
+
     else:
-        mensaje=fecha + "No hay usuarios con más de 3 logins no exitosos"
+        mensaje=fecha + "No hay usuarios con mas de 3 logins no exitosos"
         print(mensaje)
         with open(ruta_logs_auditor, 'a') as f:
             f.write(mensaje+"\n")
