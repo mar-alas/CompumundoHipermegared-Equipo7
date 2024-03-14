@@ -46,7 +46,7 @@ const botCheckerMiddleware = (req, res, next) => {
 };
 
 
-app.use('/service1', botCheckerMiddleware, createProxyMiddleware({ target: 'http://localhost:3001', changeOrigin: true }));
+app.use('/login', botCheckerMiddleware, createProxyMiddleware({ target: 'http://localhost:3001', changeOrigin: true }));
 app.use('/service2', botCheckerMiddleware, createProxyMiddleware({ target: 'http://localhost:3002', changeOrigin: true }));
 
 
