@@ -12,7 +12,7 @@ const app = express();
 const port = 5000;
 
 // 1. IP Filter
-const ipsPermitidas = ['::1'];
+const ipsPermitidas = ['::ffff:127.0.0.1', '::1'];
 app.use(ipfilter(ipsPermitidas, { mode: 'allow' }));
 
 // 2. Rate Limiter
@@ -52,7 +52,7 @@ app.use('/service2', botCheckerMiddleware, createProxyMiddleware({ target: 'http
 
 app.get('/', (req, res) => {
   if (req.isSpider()) {
-    res.status(403).send('Acceso denegado');
+    res.status(403).send('Acceso denegado para Bots');
   } else {
     res.send('API Gateway Service con protecciones y proxy está funcionando');
   }

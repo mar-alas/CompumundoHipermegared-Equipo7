@@ -12,17 +12,73 @@ Este es el repositorio de trabajo del equipo #7 para la asignatura de Arquitectu
 
 
 
-## Ejecución
+## API Gateway
 
-### API Gateway
-Dentro del directorio /api-gateway-service ejecute:
-```bash
-npm install
-```
-y luego
-```bash
-npm start
-```
+El archivo `gateway.js` dentro del directorio `api-gateway-service` es el punto de entrada principal del API Gateway.
+
+### Requisitos Previos
+
+Asegúrate de tener instalado [Node.js](https://nodejs.org/) en tu sistema para poder ejecutar el servicio. Este servicio ha sido probado en la versión de Node.js v18.
+
+### Configuración y Ejecución
+
+1. **Navega al Directorio del Servicio:**
+
+   Abre una terminal y navega al directorio `api-gateway-service`:
+
+   ```bash
+   cd api-gateway-service
+   ```
+
+2. **Instalar dependencias:**
+
+   ```bash
+   npm install
+   ```
+
+3. **Iniciar servicio:**
+  ```bash
+    npm start
+  ```
+
+### Verificación API Gateway
+
+**Verificar puerto de ejecución:**
+  ```bash
+    curl http://localhost:5000
+  ```
+
+### Verificación detección de Bots (Bot detector)
+
+**Simulación request Google Bot:**
+  ```bash
+    curl -H "User-Agent: Googlebot/2.1 (+http://www.google.com/bot.html)" http://localhost:5000
+  ```
+
+### Verificación de IP (IP allow-list validator)
+
+**IP Permitidas:**
+  ```bash
+    - IPv4 en IPv6 local: '::ffff:127.0.0.1'
+    - IPv6 local: '::1'
+  ```
+
+### Verificación inyección SQL (SQL injection validator)
+
+**Simulación request que incluye SQL:**
+  ```bash
+    curl -X POST http://localhost:5000 -d "usuario=' OR '1'='1' -- "
+  ```
+
+### Verificación XSS (Cross-Site Scripting validator)
+
+**Simulación request que XSS**
+  ```bash
+    curl -X POST http://localhost:5000 -d "datos=<script>alert('XSS')</script>"
+  ```
+
+
+
 
 ### Rest API
 Dentro del directorio / ejecute
