@@ -6,7 +6,7 @@ from datetime import datetime
 celery = Celery('tasks', broker='redis://localhost:6379/0')
 
 def insert_user_in_logs(username, exitoso):
-    file_name = "microservicios/base_datos/table_login_logs.csv"
+    file_name = "seguridad/microservicios/base_datos/table_login_logs.csv"
     print(f"LOCATION: {os.getcwd()}")
     # Check if the file exists
     if not os.path.exists(file_name):

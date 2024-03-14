@@ -7,5 +7,9 @@ def generate_2fa_code(user_name: str):
         name=user_name,
         issuer_name='ExperimentoSeguridad')
     # Qr code generation step
-    qrcode.make(uri).save("qr.png")
-    
+    qrcode.make(uri).save(f"{user_name}_qr.png")
+
+# generate_2fa_code(user_name="dgamez@gmail.com")
+# generate_2fa_code(user_name="jhon@gmail.com")
+# generate_2fa_code(user_name="maria@gmail.com")
+# generate_2fa_code(user_name="robert@gmail.com")

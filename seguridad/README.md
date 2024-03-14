@@ -135,11 +135,15 @@ Deberá obtener una respuesta asi:
 }
 ```
 
+### actualizar el pythonpath
+Agregar la carpeta de seguridad al python path con el siguiente comando:
+export PYTHONPATH=$PWD/seguridad:$PYTHONPATH
+
 
 ### Rest API
-Dentro del directorio /seguridad ejecute (paso 2: hacer el de los datos del deportista y tener un api central)
+Ejecute (paso 2: hacer el de los datos del deportista y tener un api central)
 ```bash
-python3.9 microservicios/user_login/user_login_service.py
+python3.9 seguridad/microservicios/user_login/user_login_service.py
 ```
 
 ### Inciar Docker Desktop o Docker Daemon

@@ -2,8 +2,9 @@ from flask import Flask, request, jsonify, abort
 from flask_restful import Resource, reqparse
 from queue_user_login import insert_user_in_logs
 from flask_restful import Api
-
+from seguridad.microservicios.base_datos.coneccion_bd import validar_datos_usuario
 from user_login_data_validator import validar_request
+from seguridad.microservicios.authorization_manager import validar_codigo
 
 
 app = Flask(__name__)
@@ -22,12 +23,6 @@ def check_request_size():
         abort(413)  # 413 : Payload Too Large
 
 
-
-users = {
-    'maria': 'password1',
-    'user2': 'password2'
-}
-
 class Userlogin(Resource):
     
 
@@ -45,16 +40,18 @@ class Userlogin(Resource):
         validation_result = validar_request(username, password, code)
 
         if validation_result != 'OK':
+            insert_user_in_logs(username, 1)
             return {'message': str(validation_result) }, 400
 
-        
-        if username in users and users[username] == password:
-            # # if validar_codigo(code):
-            insert_user_in_logs(username, 0)
-            return {'message': 'Login successful!'}, 200
-            # else:
-            #     return jsonify({'message': 'Invalid code!'}), 401
+        if validar_datos_usuario(username, password):
+            if validar_codigo(code):
+                insert_user_in_logs(username, 0)
+                return {'message': 'Login successful!'}, 200
+            else:
+                insert_user_in_logs(username, 1)
+                return {'message': 'Invalid code!'}, 401
         else:
+            insert_user_in_logs(username, 1)
             return {'message': 'Invalid username or password!'}, 401
 
 api.add_resource(Userlogin, '/login')
