@@ -1,7 +1,24 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, abort
 from flask_restful import Resource, reqparse
 from queue_user_login import insert_user_in_logs
 from flask_restful import Api
+
+app = Flask(__name__)
+api = Api(app)
+
+# TODO: Cambiar AQUI el tamaño maximo de request que vamos a permitir para la prueba de seguridad.
+# app.config['MAX_CONTENT_LENGTH'] = 1 * 1024 * 1024 # 1MB
+app.config['MAX_CONTENT_LENGTH'] = 1 * 1 * 10 # 
+
+@app.before_request
+def check_request_size():
+    content_length = request.content_length
+    max_content_length = app.config['MAX_CONTENT_LENGTH']
+    print("Paso el tamaño de la request:", content_length)
+    if content_length is not None and content_length > max_content_length:
+        abort(413)  # 413 : Payload Too Large
+
+
 
 users = {
     'maria': 'password1',
@@ -26,9 +43,6 @@ class Userlogin(Resource):
             #     return jsonify({'message': 'Invalid code!'}), 401
         else:
             return {'message': 'Invalid username or password!'}, 401
-
-app = Flask(__name__)
-api = Api(app)
 
 api.add_resource(Userlogin, '/login')
 
