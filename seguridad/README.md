@@ -41,7 +41,7 @@ Asegúrate de tener instalado [Node.js](https://nodejs.org/) en tu sistema para 
     npm start
   ```
 
-### Verificación API Gateway
+### Verificación
 
 **Verificar puerto de ejecución:**
   ```bash
@@ -84,7 +84,29 @@ Asegúrate de tener instalado [Node.js](https://nodejs.org/) en tu sistema para 
     curl -X POST http://localhost:5000/login
   ```
 
-
+### Verificacion control de tamaño de la solicitud
+Para comprobar el control de seguridad que se defiende de requests grandes en tamaño. Haga lo siguiente:
+1. Dentro de la carpeta de microservicios, en cada servicio (user_login_service y user_editor_service) edite las lineas del tamaño maximo a permitir.
+2. Editar los valores de la linea:
+```python
+app.config['MAX_CONTENT_LENGTH'] = 1 * 1 * 10
+```
+3. ejecute el siguente request:
+```bash
+curl --location 'http://127.0.0.1:5000/login' \
+--header 'Content-Type: application/json' \
+--data '{
+    "username": "",
+    "password": "",
+    "code": ""
+}'
+```
+Deberá obtener una respuesta de bloqueo asi:
+```bash
+{
+    "message": "The data value transmitted exceeds the capacity limit."
+}
+```
 
 
 ### Rest API
