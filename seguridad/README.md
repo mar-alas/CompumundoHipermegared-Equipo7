@@ -9,6 +9,8 @@ Este es el repositorio de trabajo del equipo #7 para la asignatura de Arquitectu
 <a id="instrucciones-programa"></a>
 ## Instrucciones para correr programa
 
+1. Correr el api gateway
+2. Correr el servicio de login
 
 <a id="integrantes"></a>
 ## Integrantes
@@ -18,7 +20,7 @@ Este es el repositorio de trabajo del equipo #7 para la asignatura de Arquitectu
 - Robert Castro
 - Daniel Gamez
 - Jhon Puentes
-- 
+
 <a id="mod-componentes"></a>
 ## Modelo de componentes
 
