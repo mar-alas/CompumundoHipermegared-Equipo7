@@ -15,6 +15,7 @@ Este es el repositorio de trabajo del equipo #7 para la asignatura de Arquitectu
 
 ## Modelo de componentes
 <a id="mod-componentes"></a>
+
 ![Diagramas_Sportapp_Seguridad-Componentes Equipo](https://github.com/mar-alas/CompumundoHipermegared-Equipo7/assets/142275813/7bdf83f3-02cd-4797-a91a-a58af4570679)
 
 
