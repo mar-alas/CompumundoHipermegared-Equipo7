@@ -108,6 +108,33 @@ Deberá obtener una respuesta de bloqueo asi:
 }
 ```
 
+### Verificacion de politica de claves y validacion de datos para Login Service
+El componente Login Data validator, valida lo siguiente:
+* username debe ser un correo con sentido, valido y logico.
+* el code 2FA, debe ser digitos y no debe superar 10 digitos.
+* Politica segura para claves:
+    Longitud mínima de 8 caracteres.
+    Contiene letras mayúsculas y minúsculas, números y caracteres especiales.
+    No utiliza información personal.
+    No utiliza palabras comunes o secuencias alfabéticas o numéricas.
+
+Para validar estas reglas de seguridad. Ejecute y pruebe:
+```bash
+curl --location 'http://127.0.0.1:5000/login' \
+--header 'Content-Type: application/json' \
+--data '{
+    "username": "jhon@gmail.com",
+    "password": "1234567",
+    "code": ""
+}'
+```
+Deberá obtener una respuesta asi:
+```bash
+{
+    "message": "La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial"
+}
+```
+
 
 ### Rest API
 Dentro del directorio /seguridad ejecute (paso 2: hacer el de los datos del deportista y tener un api central)
