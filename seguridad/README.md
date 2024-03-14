@@ -98,7 +98,7 @@ Inicie el proceso docker manual (Docker Desktop) o por comandos.
 Guia: https://docs.docker.com/config/daemon/start/
 
 ### Iniciar servidor de Redis
-```
+```bash
 docker run -p 6379:6379 -it redis/redis-stack:latest
 ```
 
@@ -106,14 +106,16 @@ docker run -p 6379:6379 -it redis/redis-stack:latest
 
 ### Colas 
 
-```
+```bash
 celery -A queue_user_login worker --loglevel=info
-celery -A 
 ```
 
 ## Correr el comando de curl para inicial sesion
 
 ### Comandos: 
+
+Curl para ejecutar Login
+```bash
 curl --location 'http://127.0.0.1:5000/login' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -121,3 +123,4 @@ curl --location 'http://127.0.0.1:5000/login' \
     "password": "password1",
     "code": "1234"
 }'
+```
