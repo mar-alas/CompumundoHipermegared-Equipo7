@@ -77,6 +77,13 @@ Asegúrate de tener instalado [Node.js](https://nodejs.org/) en tu sistema para 
     curl -X POST http://localhost:5000 -d "datos=<script>alert('XSS')</script>"
   ```
 
+### Validación limitador de request para login (IP rate limiter)
+1. **Renombra el archivo `.env.example` a `.env`**
+2. **Ejecuta varios request al path login**
+  ```bash
+    curl -X POST http://localhost:5000/login
+  ```
+
 
 
 

@@ -1,12 +1,13 @@
 const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const ipfilter = require('express-ipfilter').IpFilter;
-const rateLimiter = require('express-limiter');
+const rateLimit = require('express-rate-limit');
 const sqlInjection = require('sql-injection');
 // const spiderDetector = require('express-spider-middleware');
 const expressSpiderMiddleware = require('express-spider-middleware')
 // const xssSanitizer = require('express-xss-sanitizer');
 const xss = require('xss-clean');
+require('dotenv').config();
 
 const app = express();
 const port = 5000;
@@ -16,22 +17,28 @@ const ipsPermitidas = ['::ffff:127.0.0.1', '::1'];
 app.use(ipfilter(ipsPermitidas, { mode: 'allow' }));
 
 // 2. Rate Limiter
-// TODO instancia de Redis
-const limiter = rateLimiter(app, {
-  path: '*',
-  method: 'all',
-  lookup: ['connection.remoteAddress'],
-  total: 150, // solicitudes por hora
-  expire: 1000 * 60 * 60
+// login
+const loginLimiter = rateLimit({
+  windowMs: Number(process.env.LOGIN_LIMITER_WINDOW_MS),
+  max: Number(process.env.LOGIN_LIMITER_MAX),
+  message: "Demasiadas solicitudes de inicio de sesión desde esta IP, inténtalo de nuevo después de un minuto",
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Root
+const rootLimiter = rateLimit({
+  windowMs: Number(process.env.ROOT_LIMITER_WINDOW_MS),
+  max: Number(process.env.ROOT_LIMITER_MAX),
+  message: "Demasiadas solicitudes desde esta IP, por favor intenta de nuevo más tarde",
+  standardHeaders: true,
+  legacyHeaders: false,
 });
 
 // 3. SQL Injection
 app.use(sqlInjection);
-
 // 4. Bot Detector
 app.use(expressSpiderMiddleware.middleware())
-
-
 // 5. XSS
 app.use(xss());
 
@@ -46,17 +53,20 @@ const botCheckerMiddleware = (req, res, next) => {
 };
 
 
-app.use('/login', botCheckerMiddleware, createProxyMiddleware({ target: 'http://localhost:3001', changeOrigin: true }));
+app.use('/login', loginLimiter, botCheckerMiddleware, createProxyMiddleware({ target: 'http://localhost:3001', changeOrigin: true }));
 app.use('/service2', botCheckerMiddleware, createProxyMiddleware({ target: 'http://localhost:3002', changeOrigin: true }));
 
 
-app.get('/', (req, res) => {
+app.get('/', rootLimiter, (req, res, next) => {
   if (req.isSpider()) {
     res.status(403).send('Acceso denegado para Bots');
   } else {
-    res.send('API Gateway Service con protecciones y proxy está funcionando');
+    next();
   }
+}, (req, res) => {
+  res.send('API Gateway Service con protecciones y proxy está funcionando');
 });
+
 
 
 

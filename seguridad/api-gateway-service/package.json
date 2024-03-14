@@ -13,9 +13,10 @@
   "author": "Maria Alas, Robert Castro, Daniel Gamez, Jhon Puentes",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.4.5",
     "express": "^4.18.3",
     "express-ipfilter": "^1.3.2",
-    "express-limiter": "^1.6.1",
+    "express-rate-limit": "^7.2.0",
     "express-spider-middleware": "^1.1.9",
     "express-xss-sanitizer": "^1.1.9",
     "sql-injection": "^0.0.7",
