@@ -153,6 +153,26 @@ Deberá obtener una respuesta asi:
 }
 ```
 
+### Verificacion de certificados y validacion de datos al editar datos del usuario
+Lo atacamos cuando
+1. No enviamos los headers de certificacion.
+2. No enviamos el certicicado que es.
+3. No enviamos el keypass que es.
+4. Enviamos un nombre corto (menos de 2 caracteres)
+5. Enviamos un phone con tamaño distinto de 10 caracteres.
+
+```bash
+curl --location --request PUT 'http://127.0.0.1:5001/api/v1/users' \
+--header 'X-certificate-data: 5d1c17c6-7d13-4d1e-8a36-5109a3e2c0d3' \
+--header 'X-certificate-keypass: 1c476dcb-5911-4d03-b8a4-f293722fdcb2' \
+--header 'Content-Type: application/json' \
+--data '{
+  "username": "12345",
+  "name": "Jhon",
+  "phone": "1234567890"
+}'
+```
+
 ### actualizar el pythonpath
 Agregar la carpeta de seguridad al python path con el siguiente comando:
 export PYTHONPATH=$PWD/seguridad:$PYTHONPATH
