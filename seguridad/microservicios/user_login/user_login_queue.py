@@ -1,4 +1,4 @@
-#this celery runs with the command: celery -A queue_user_registration_service_principal worker --loglevel=info
+#this celery runs with the command: celery -A user_login_queue.celery worker --loglevel=info
 from celery import Celery
 import os
 
