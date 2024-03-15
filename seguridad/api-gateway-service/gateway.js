@@ -26,26 +26,7 @@ const loginLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-// edtir
-const editLimiter = rateLimit({
-  windowMs: Number(process.env.EDIT_LIMITER_WINDOW_MS),
-  max: Number(process.env.EDIT_LIMITER_MAX),
-  message: "Demasiadas solicitudes de edicion desde esta IP, inténtalo de nuevo después de un minuto",
-  standardHeaders: true,
-  legacyHeaders: false,
-});
 
-// Root
-const rootLimiter = rateLimit({
-  windowMs: Number(process.env.ROOT_LIMITER_WINDOW_MS),
-  max: Number(process.env.ROOT_LIMITER_MAX),
-  message: "Demasiadas solicitudes desde esta IP, por favor intenta de nuevo más tarde",
-  standardHeaders: true,
-  legacyHeaders: false,
-});
-
-// 3. SQL Injection
-//app.use(sqlInjection);
 // 4. Bot Detector
 app.use(expressSpiderMiddleware.middleware())
 // 5. XSS
@@ -63,12 +44,10 @@ const botCheckerMiddleware = (req, res, next) => {
 
 
 app.use('/login', loginLimiter, botCheckerMiddleware, createProxyMiddleware({ target: 'http://localhost:3001', changeOrigin: true }));
-
-// TODO POR IMPLEMENTAR
-//app.use('/edit', editLimiter, botCheckerMiddleware, createProxyMiddleware({ target: 'http://localhost:3001', changeOrigin: true }));
+app.use('/api/v1/users', botCheckerMiddleware, createProxyMiddleware({ target: 'http://localhost:3002', changeOrigin: true }));
 
 
-app.get('/', rootLimiter, (req, res, next) => {
+app.get('/', (req, res, next) => {
   if (req.isSpider()) {
     res.status(403).send('Acceso denegado para Bots');
   } else {
