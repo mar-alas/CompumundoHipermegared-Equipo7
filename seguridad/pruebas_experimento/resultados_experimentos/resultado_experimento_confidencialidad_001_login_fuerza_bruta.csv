@@ -1,0 +1,24 @@
+fecha	nombre_experimento	categoria	id_request	request	request_response	tipo_resultado	resultado_esperado	resultado_obtenido	LOGIN_LIMITER_MAX
+14/03/2024	experimento_confidencialidad_001_login_fuerza_bruta	confidencialidad	1	"{""username"":""dgamez@gmail.com"",""password"":""Password1!"",""code"":""1234""}"	"{
+    ""message"": ""Invalid code!""
+}"	status_code	400	400	1
+14/03/2024	experimento_confidencialidad_001_login_fuerza_bruta	confidencialidad	2	"{""username"":""dgamez@gmail.com"",""password"":""Password1!"",""code"":""1234""}"	"{
+    ""message"": ""Invalid code!""
+}"	status_code	400	400	1
+14/03/2024	experimento_confidencialidad_001_login_fuerza_bruta	confidencialidad	3	"{""username"":""dgamez@gmail.com"",""password"":""Password1!"",""code"":""1234""}"	"{
+    ""message"": ""Invalid code!""
+}"	status_code	400	400	1
+14/03/2024	experimento_integridad_002_danio_base_datos 	integridad	1	script correr dañar bd 1: borrar la bd		prueba deteccion y prueba de recuperacion	detecta y se recupera	detecta y se recupera	1
+14/03/2024	experimento_integridad_002_danio_base_datos 	integridad	2	script correr dañar bd 2: cambiar nombre de Daniel Gamez		prueba deteccion y prueba de recuperacion	detecta y se recupera	detecta y se recupera	1
+14/03/2024	experimento_integridad_003_sql_injection	integridad	1	delete from table_users	"{
+	""error"": ""SQL Detected in Request, Rejected.""
+}"		403	403	1
+14/03/2024	experimento_integridad_003_sql_injection	integridad	2	delete from table_users	"{
+	""error"": ""SQL Detected in Request, Rejected.""
+}"		403	403	1
+14/03/2024	experimento_integridad_003_sql_injection	integridad	3	delete from table_users	"{
+	""error"": ""SQL Detected in Request, Rejected.""
+}"		403	403	1
+14/03/2024	experimento_integridad_003_sql_injection	integridad	4	delete from table_users	"{
+	""error"": ""SQL Detected in Request, Rejected.""
+}"		403	403	1
