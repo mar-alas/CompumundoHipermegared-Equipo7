@@ -54,7 +54,7 @@ class Userlogin(Resource):
         print("validation_result: ", validation_result)
 
         if validation_result != 'OK':
-            insert_user_in_logs(username, 1)
+            insert_user_in_logs(username, 0)
             return {'message': str(validation_result) }, 400
 
         if validar_datos_usuario(username, password):
@@ -65,7 +65,7 @@ class Userlogin(Resource):
                 insert_user_in_logs(username, 0)
                 return {'message': 'Invalid code!'}, 401
         else:
-            insert_user_in_logs(username, 1)
+            insert_user_in_logs(username, 0)
             return {'message': 'Invalid username or password!'}, 401
 
 api.add_resource(Userlogin, '/login')
