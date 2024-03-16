@@ -6,7 +6,7 @@ from seguridad.pruebas_experimento.experimento_utils import borrar_archivos_prev
 import string
 import random
 
-URL = "http://127.0.0.1:5001"
+URL = "http://127.0.0.1:5000"
 ENDPOINT = "/login"
 NUM_REQUESTS = 1000
 NOMBRE_EXPERIMENTO = "experimento_confidencialidad_001_login_fuerza_bruta"
@@ -21,6 +21,7 @@ def correr_prueba():
           f"contrasenas incorrectas, se espera fallo 100% de las veces")
     headers = {
         'Content-Type': 'application/json',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
     }
     request_enviados=[]
     request_enviados.append("fecha;nombre_experimento;categoria;id_request;request;response;tipo_resultado;resultado_esperado;resultado_obtenido;LOGIN_LIMITER_MAX")
@@ -50,4 +51,4 @@ def guardar_logs(lista, archivo):
             logs.write('\n')
 
 request_enviados = correr_prueba()
-guardar_logs(request_enviados, "seguridad/pruebas_experimento/resultados_experimentos/resultado_experimento_confidencialidad_001.csv")
+guardar_logs(request_enviados, "resultados_experimentos/resultado_experimento_confidencialidad_001.csv")
