@@ -222,22 +222,6 @@ curl --location 'http://127.0.0.1:5000/login' \
 
 Se agrega los comandos para ejecutar cada uno de los experimentos propuestos tanto para confidencialidad e integridad
 
-### Detección de XSS
-```bash
-python3.9 pruebas_experimento/experimento_integridad_001_XSS.py
-```
-### Detección de Bots
-```bash
-python3.9 pruebas_experimento/experimento_confidencialidad_005_login_bots.py
-```
-### Filtrado de IP permitidas
-```bash
-python3.9 pruebas_experimento/experimento_confidencialidad_004_login_desde_ipsnopermitida.py
-```
-### Filtrado de SQL Injection
-```bash
-python3.9 pruebas_experimento/experimento_integridad_005_sql_injection.py
-```
 ### Login fuerza bruta
 ```bash
 python3.9 pruebas_experimento/experimento_confidencialidad_001_login_fuerza_bruta.py
@@ -257,5 +241,21 @@ python3.9 pruebas_experimento/experimento_integridad_002_edicion_usuario.py
 ### Edición no autorizada
 ```bash
 python3.9 pruebas_experimento/experimento_integridad_003_edicion_no_autorizada.py
+```
+### Detección de XSS
+```bash
+python3.9 pruebas_experimento/experimento_integridad_001_XSS.py
+```
+### Detección de Bots
+```bash
+python3.9 pruebas_experimento/experimento_confidencialidad_005_login_bots.py
+```
+### Filtrado de IP permitidas
+```bash
+python3.9 pruebas_experimento/experimento_confidencialidad_004_login_desde_ipsnopermitida.py
+```
+### Filtrado de SQL Injection
+```bash
+python3.9 pruebas_experimento/experimento_integridad_005_sql_injection.py
 ```
 
