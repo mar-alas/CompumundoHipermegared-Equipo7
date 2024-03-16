@@ -1,8 +1,8 @@
 #autor: Daniel Gamez
 #fecha: 15/03/2024
 #este codigo revisa si hay usuarios modificados en la base de datos que no tengan logs asociados del servicio de editar
-#este archivo debe correrse desde la carpeta base del proyecto
-
+#este archivo debe correrse desde la carpeta base del proyecto con el comando:
+#python3 seguridad/microservicios/edit_audit_monitor/edit_audit_monitor.py
 import pandas as pd
 import time
 import os
@@ -36,12 +36,7 @@ def revision_edits_no_autorizados():
                 df_log = pd.DataFrame({'Fecha': [fecha_log_monitor],'Tipo_Alerta':'DETECTED_ATACK', 'usuario':usuario,'Mensaje': [mensaje]})
                 df_log.to_csv(ruta_logs_auditor_csv, mode='a', header=not(existe_csv), index=False, sep=';')
                 
-        
-        print(fecha_log_monitor + " hay usuarios editados sin autorizacion")  
        
-    else:
-        mensaje=fecha_log_monitor + " No se detectaron usuarios editados sin permiso"
-        print(mensaje)
 
 try:
     while True:
