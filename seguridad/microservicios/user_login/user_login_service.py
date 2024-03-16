@@ -1,3 +1,4 @@
+# este archivo se corre desde la carpeta del repositorio
 #revisar si se debe ejectuar este comando en consola antes de usar:
 #export PYTHONPATH=$PWD/seguridad:$PYTHONPATH
 

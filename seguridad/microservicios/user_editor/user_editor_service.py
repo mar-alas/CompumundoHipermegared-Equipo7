@@ -1,3 +1,6 @@
+#se corre desde la carpeta user_editor_service
+#con el comando python3 user_editor_service.py
+
 from flask import Flask, request, jsonify, abort
 from user_editor_certificator import validate_certificate
 from user_editor_data_validator import validate_request_to_edit_user

@@ -1,3 +1,5 @@
+// este archivo se corre desde la carpeta api-gatway-service con el comando npm start
+// en caso de no correr revisar paquetes instalados, correr npm install si hay fallas por paquetes
 const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const ipfilter = require('express-ipfilter').IpFilter;
