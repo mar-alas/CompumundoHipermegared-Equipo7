@@ -1,5 +1,5 @@
-usuario;contrasenia;nombre_usuario
-dgamez@gmail.com;Password1!;Daniel Gamez
-jhon@gmail.com;Password1!;Jhon
-maria@gmail.com;Password1!;Maria
-robert@gmail.com;Password1!;Robert
+usuario;contrasenia;nombre_usuario;fecha_insercion;fecha_modificacion
+dgamez@gmail.com;Password1!;Daniel Gamez;2024-03-15 22:07:54;2024-03-15 22:07:54
+jhon@gmail.com;Password1!;Jhon;2024-03-15 22:07:54;2024-03-15 22:07:54
+maria@gmail.com;Password1!;Maria;2024-03-15 22:07:54;2024-03-15 22:07:54
+robert@gmail.com;Password1!;Robert;2024-03-15 22:07:54;2024-03-15 22:07:54
