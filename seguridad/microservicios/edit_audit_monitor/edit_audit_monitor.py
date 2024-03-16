@@ -41,7 +41,7 @@ def revision_edits_no_autorizados():
 try:
     while True:
         revision_edits_no_autorizados()
-        time.sleep(2)
+        time.sleep(0.1)
 
 except KeyboardInterrupt:
     print("\nKeyboard interrupt received. Exiting...")
