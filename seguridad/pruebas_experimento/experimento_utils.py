@@ -71,6 +71,20 @@ def detectar_modificacion_sin_autorizacion_bd(usuario):
     else:
         return True
 
+def agregar_usuario_bd(usuario, contrasenia, nombre_usuario,fecha_insercion,fecha_modificacion):
+    """
+    Función que agrega un usuario a la base de datos
+    """
+    nuevo_usuario = pd.DataFrame({
+        'usuario': [usuario],
+        'contrasenia': [contrasenia],
+        'nombre_usuario': [nombre_usuario],
+        'fecha_insercion': [fecha_insercion],
+        'fecha_modificacion': [fecha_modificacion]
+    })
+
+    nuevo_usuario.to_csv(ruta_tabla_usuarios, mode='a', index=False, header=False, sep=";")
+
 def setup_experimento():
     """
     Función que prepara el sistema antes del experimento
