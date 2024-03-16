@@ -1,23 +1,10 @@
-import csv
+import pandas as pd
 
 def validar_datos_usuario(username, password):
-    # Initialize an empty dictionary
-    users = {}
-    # Open the CSV file
-    with open("seguridad/microservicios/base_datos/table_usuarios.csv", mode='r') as file:
-        # Create a CSV reader object
-        # reader = csv.reader(file, delimiter=';')
-        reader = csv.DictReader(file, delimiter=';')
-        # Skip the header if present
-        next(reader, None)
-        # Loop through each row in the CSV file
-        for row in reader:
-            # Extract email and password from the row
-            # email, password, _ = row
-            # Add the email and password to the dictionary
-            # users[email.strip()] = password.strip()
-            users[row['usuario'].strip()] = row['contrasenia'].strip()
-    if username in users and users[username] == password:
+    ruta_tabla_usuarios="seguridad/microservicios/base_datos/table_usuarios.csv"
+    tabla_usuarios=pd.read_csv(ruta_tabla_usuarios,sep=";",header=0)
+    user_logeado=tabla_usuarios[(tabla_usuarios["usuario"]==username) & (tabla_usuarios["contrasenia"]==password)]
+    if not user_logeado.empty:
         return True
     else:
         return False
