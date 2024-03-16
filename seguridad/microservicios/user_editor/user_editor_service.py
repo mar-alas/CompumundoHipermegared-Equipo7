@@ -1,8 +1,12 @@
 from flask import Flask, request, jsonify, abort
 from user_editor_certificator import validate_certificate
 from user_editor_data_validator import validate_request_to_edit_user
-
+from flask_restful import Api,Resource
 app = Flask(__name__)
+api = Api(app)
+import pandas as pd
+import os
+import time
 
 # TODO: Cambiar AQUI el tamaño maximo de request que vamos a permitir para la prueba de seguridad.
 app.config['MAX_CONTENT_LENGTH'] = 25 * 1024 * 1024 # 1MB
@@ -37,23 +41,61 @@ def check_certificate():
     if not validate_certificate(certificate_value, keypass):
         abort(401)
 
-data_to_edit = []
+def agregar_log_edicion_usuario(usuario):
+    """
+    Esta funcion agrega un log de usuario al archivo de logs.
+    """
+    ruta_log_usuarios = '../base_datos/table_usuario_edicion_logs.csv'
+    existe_csv=os.path.exists(ruta_log_usuarios)
 
-@app.route('/api/v1/users', methods=['PUT'])
-def edit():
-    data = request.json
+    fecha_log= time.strftime("%Y-%m-%d %H:%M:%S")
+    df_log_usuarios = pd.DataFrame({'fecha':[fecha_log],'usuario': [usuario],'edicion_exitosa':[1]})
+    df_log_usuarios.to_csv(ruta_log_usuarios, mode='a', header=not(existe_csv), index=False, sep=';')
 
-    # Data Validation.
-    validation_result = validate_request_to_edit_user(data)
-    if validation_result!= "OK":
-        return jsonify({'message': validation_result}), 400
+
     
-    if 'username' not in data:
-        return jsonify({'message': 'Unauthorized access!'}), 401
+   
 
-    new_data = data.get('new_data')
-    data_to_edit.append(new_data)
-    return jsonify({'message': 'Data edited successfully!', 'new_data': new_data}), 200
+#@app.route('/api/v1/users', methods=['PUT'])
+class UserEdition(Resource):
+    def put(self):
+        data = request.json
+        data_pd = pd.DataFrame([data])
+        print("Data to edit: ", data_pd)
+
+        if "usuario" not in data_pd.columns:
+            return jsonify({'message': 'Unauthorized access!'}), 401
+
+        data_pd.set_index('usuario', inplace=True)
+
+        # Data Validation.
+        #validation_result = validate_request_to_edit_user(data)
+        #print("Validation result: ", validation_result)
+        #validation_result="OK"
+        #if validation_result!= "OK":
+        #    return jsonify({'message': validation_result}), 400
+        
+        #if 'username' not in data:
+        #    return jsonify({'message': 'Unauthorized access!'}), 401
+
+
+        ruta_table_usuarios = '../base_datos/table_usuarios.csv'
+        df_usuarios = pd.read_csv(ruta_table_usuarios, header=0, sep=';')
+
+        if "usuario" not in df_usuarios.columns:
+            return jsonify({'message': 'Error BD incorrecta!'}), 401
+
+        df_usuarios.set_index('usuario', inplace=True)
+        df_usuarios.update(data_pd)
+        df_usuarios.reset_index(inplace=True)
+
+        df_usuarios.to_csv(ruta_table_usuarios, sep=';', index=False)
+        
+        agregar_log_edicion_usuario(data['usuario'])
+
+        return jsonify({'message': 'Data edited successfully!'})
+    
+api.add_resource(UserEdition, '/api/v1/users')
 
 if __name__ == '__main__':
     app.run(debug=True, host='localhost', port=3002)
