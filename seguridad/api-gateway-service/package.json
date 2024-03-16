@@ -20,6 +20,7 @@
     "express-spider-middleware": "^1.1.9",
     "express-xss-sanitizer": "^1.1.9",
     "sql-injection": "^0.0.7",
+    "xss-attack-detection": "^1.0.4",
     "xss-clean": "^0.1.4"
   },
   "devDependencies": {
