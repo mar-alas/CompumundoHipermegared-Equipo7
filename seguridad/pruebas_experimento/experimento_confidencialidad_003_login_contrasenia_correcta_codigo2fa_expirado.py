@@ -2,7 +2,7 @@ import requests
 import random
 import json
 import datetime
-from seguridad.pruebas_experimento.experimento_utils import borrar_archivos_previo_experimento
+from pruebas_experimento.experimento_utils import borrar_archivos_previo_experimento
 import string
 import random
 import pyotp
@@ -54,4 +54,4 @@ def guardar_logs(lista, archivo):
             logs.write('\n')
 
 request_enviados = correr_prueba()
-guardar_logs(request_enviados, "seguridad/pruebas_experimento/resultados_experimentos/resultado_experimento_confidencialidad_0002.csv")
+guardar_logs(request_enviados, "pruebas_experimento/resultados_experimentos/resultado_experimento_confidencialidad_0002.csv")
