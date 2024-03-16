@@ -1,16 +1,11 @@
+import random
 import requests
 import csv
-from datetime import datetime
+import datetime
 import os
 
 url = 'http://localhost:5000/login'
-n_requests = 100
-
-login_data_template = {
-    "username": "robert@gmail.com",
-    "password": "Password1&",
-    "code": "424496"
-}
+n_requests = 1000
 
 xss_scripts = [
     "<script>alert('XSS1')</script>",
@@ -28,14 +23,20 @@ if not os.path.exists('resultados_experimentos'):
 
 csv_headers = ['fecha', 'nombre_experimento', 'categoria', 'id_request', 'request', 'request_response', 'tipo_resultado', 'resultado_esperado', 'resultado_obtenido', 'LOGIN_LIMITER_MAX']
 
-with open(csv_file_name, mode='w', newline='', encoding='utf-8') as file:
-    writer = csv.writer(file, quoting=csv.QUOTE_ALL)
+with open(csv_file_name, mode='w', newline='', encoding='utf-8-sig') as file:
+    writer = csv.writer(file, delimiter=';', quoting=csv.QUOTE_ALL)
     writer.writerow(csv_headers)
 
     for i in range(n_requests):
-        malicious_username = f"robert{xss_scripts[i % len(xss_scripts)]}@gmail.com"
-        login_data = login_data_template.copy()
-        login_data['username'] = malicious_username
+
+        correo = malicious_username = f"robert{xss_scripts[i % len(xss_scripts)]}@gmail.com"
+        password = "Password1!"
+        codigo = f'{random.randint(0,9)}{random.randint(0,9)}{random.randint(0,9)}{random.randint(0,9)}'
+        login_data = {
+            'username': correo,
+            'password': password,
+            'code': codigo
+        }
         
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
@@ -43,7 +44,7 @@ with open(csv_file_name, mode='w', newline='', encoding='utf-8') as file:
         response = requests.post(url, json=login_data, headers=headers)
 
         csv_data = [
-            datetime.now().strftime('%d/%m/%Y'),
+            datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f"),
             'experimento_integridad_001_XSS',
             'integridad', 
             i + 1,
@@ -52,7 +53,7 @@ with open(csv_file_name, mode='w', newline='', encoding='utf-8') as file:
             'status_code',
             400,
             response.status_code,
-            1
+            1000
         ]
 
         writer.writerow(csv_data)
