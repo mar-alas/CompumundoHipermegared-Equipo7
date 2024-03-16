@@ -16,8 +16,7 @@ def insert_user_in_logs(username, exitoso):
             file.write("Fecha;Usuario;Contrasenia;Exitoso\n")
 
     # Open the file in write mode ("w")
-    date_time = datetime.now()
-    fecha = date_time.strftime('%d/%m/%Y %H:%M:%S')
+    fecha = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
     with open(file_name, mode='a', encoding='utf-8') as file:
         file.write(f"{fecha};{username};{exitoso}\n")
 

@@ -1,0 +1,2 @@
+fecha;nombre_experimento;categoria;id_request;request;response;tipo_resultado;resultado_esperado;resultado_obtenido;LOGIN_LIMITER_MAX
+2024-03-16 12:31:52;experimento_integridad_003_edicion_no_autorizada;integridad;1;modificar_sin_autorizacion_bd;La base de datos FUE modificada sin autorización;booleano_deteccion_ataque;True;True;
