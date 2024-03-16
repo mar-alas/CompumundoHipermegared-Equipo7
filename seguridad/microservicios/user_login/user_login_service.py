@@ -33,18 +33,11 @@ class Userlogin(Resource):
     def post(self):
         print("inicio post")
         parser = reqparse.RequestParser()
-        print("fin declaracion parser")
         parser.add_argument('username', type=str, required=True, help='username is required')
-        print("fin username")
         parser.add_argument('password', type=str, required=True, help='password is required')
-        print("fin password")
         parser.add_argument('code', type=str, required=True, help='code is required')
-        print("fin code")
-        temp_username=request.json['username']
-        print(f'temp_username: {temp_username}')
         args = parser.parse_args()
 
-        print("fin parser")
         username = args['username']
         password = args['password']
         code = args['code']

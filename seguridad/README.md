@@ -32,7 +32,7 @@ Este es el repositorio de trabajo del equipo #7 para la asignatura de Arquitectu
 
 ## API Gateway
 
-El archivo `gateway.js` dentro del directorio `api-gateway-service` es el punto de entrada principal del API Gateway.
+El archivo `gateway.js` dentro del directorio `seguridad/api-gateway-service` es el punto de entrada principal del API Gateway.
 
 ### Requisitos Previos
 
@@ -42,10 +42,10 @@ Asegúrate de tener instalado [Node.js](https://nodejs.org/) en tu sistema para 
 
 1. **Navega al Directorio del Servicio:**
 
-   Abre una terminal y navega al directorio `api-gateway-service`:
+   Abre una terminal y navega al directorio `seguridad/api-gateway-service`:
 
    ```bash
-   cd api-gateway-service
+   cd seguridad/api-gateway-service
    ```
 
 2. **Instalar dependencias:**
@@ -58,6 +58,36 @@ Asegúrate de tener instalado [Node.js](https://nodejs.org/) en tu sistema para 
   ```bash
     npm start
   ```
+
+### Inciar Docker Desktop o Docker Daemon
+Inicie el proceso docker manual (Docker Desktop) o por comandos.
+Guia: https://docs.docker.com/config/daemon/start/
+
+### Iniciar servidor de Redis
+```bash
+docker run -p 6379:6379 -it redis/redis-stack:latest
+```
+
+## Iniciar Colas
+
+### Colas 
+Navegue al director seguridad/microservicios/user_login/
+Asegurese de tener el ambiente virtual de python activado (TODO como instalarlo y activarlo)
+Iniciar la cola
+```bash
+celery -A queue_user_login worker --loglevel=info
+```
+
+### Actualizar el pythonpath
+Agregar la carpeta de seguridad al python path con el siguiente comando:
+export PYTHONPATH=$PWD/seguridad:$PYTHONPATH
+
+### Rest API
+Asegurese de tener el ambiente virtual de python activado 
+Ejecute user_login_service.py (TODO hacer el de los datos del deportista y tener un api central)
+```bash
+python3.9 seguridad/microservicios/user_login/user_login_service.py
+```
 
 ### Verificación
 
@@ -171,34 +201,6 @@ curl --location --request PUT 'http://127.0.0.1:5001/api/v1/users' \
   "name": "Jhon",
   "phone": "1234567890"
 }'
-```
-
-### actualizar el pythonpath
-Agregar la carpeta de seguridad al python path con el siguiente comando:
-export PYTHONPATH=$PWD/seguridad:$PYTHONPATH
-
-
-### Rest API
-Ejecute (paso 2: hacer el de los datos del deportista y tener un api central)
-```bash
-python3.9 seguridad/microservicios/user_login/user_login_service.py
-```
-
-### Inciar Docker Desktop o Docker Daemon
-Inicie el proceso docker manual (Docker Desktop) o por comandos.
-Guia: https://docs.docker.com/config/daemon/start/
-
-### Iniciar servidor de Redis
-```bash
-docker run -p 6379:6379 -it redis/redis-stack:latest
-```
-
-## Iniciar Colas
-
-### Colas 
-
-```bash
-celery -A queue_user_login worker --loglevel=info
 ```
 
 ## Correr el comando de curl para inicial sesion
