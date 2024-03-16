@@ -68,11 +68,22 @@ Guia: https://docs.docker.com/config/daemon/start/
 docker run -p 6379:6379 -it redis/redis-stack:latest
 ```
 
+
+## Configurar el ambiente virtual de python
+En el directorio del proyecto cree un ambiente virtual de python
+Comando:
+```python -m venv```
+Active el ambiente virtual
+```source .venv/bin/activate```
+Instale los requerimientos con el comando
+```pip install -r seguridad/requirements.txt```
+
+
 ## Iniciar Colas
 
 ### Colas 
 Navegue al director seguridad/microservicios/user_login/
-Asegurese de tener el ambiente virtual de python activado (TODO como instalarlo y activarlo)
+Asegurese de tener el ambiente virtual de python activado
 Iniciar la cola
 ```bash
 celery -A queue_user_login worker --loglevel=info
@@ -84,9 +95,15 @@ export PYTHONPATH=$PWD/seguridad:$PYTHONPATH
 
 ### Rest API
 Asegurese de tener el ambiente virtual de python activado 
-Ejecute user_login_service.py (TODO hacer el de los datos del deportista y tener un api central)
+Ejecute user_login_service.py
 ```bash
 python3.9 seguridad/microservicios/user_login/user_login_service.py
+```
+
+Navegue a seguridad/microservicios/user_editor
+Ejecute user_editor_service.py
+```bash
+python3.9 user_editor_service.py
 ```
 
 ### Verificación
@@ -197,7 +214,7 @@ curl --location --request PUT 'http://127.0.0.1:5001/api/v1/users' \
 --header 'X-certificate-keypass: 1c476dcb-5911-4d03-b8a4-f293722fdcb2' \
 --header 'Content-Type: application/json' \
 --data '{
-  "username": "12345",
+  "usuario": "12345",
   "name": "Jhon",
   "phone": "1234567890"
 }'
