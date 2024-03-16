@@ -41,15 +41,15 @@ def check_certificate():
     if not validate_certificate(certificate_value, keypass):
         abort(401)
 
-def agregar_log_edicion_usuario(usuario):
+def agregar_log_edicion_usuario(usuario,fecha_modificacion):
     """
     Esta funcion agrega un log de usuario al archivo de logs.
     """
     ruta_log_usuarios = '../base_datos/table_usuario_edicion_logs.csv'
     existe_csv=os.path.exists(ruta_log_usuarios)
 
-    fecha_log= time.strftime("%Y-%m-%d %H:%M:%S")
-    df_log_usuarios = pd.DataFrame({'fecha':[fecha_log],'usuario': [usuario],'edicion_exitosa':[1]})
+    fecha_log= fecha_modificacion
+    df_log_usuarios = pd.DataFrame({'fecha_log':[fecha_log],'usuario': [usuario],'edicion_exitosa':[1]})
     df_log_usuarios.to_csv(ruta_log_usuarios, mode='a', header=not(existe_csv), index=False, sep=';')
 
 
@@ -66,6 +66,8 @@ class UserEdition(Resource):
         if "usuario" not in data_pd.columns:
             return jsonify({'message': 'Unauthorized access!'}), 401
 
+        fecha_modificacion = time.strftime("%Y-%m-%d %H:%M:%S")
+        data_pd['fecha_modificacion'] = fecha_modificacion
         data_pd.set_index('usuario', inplace=True)
 
         # Data Validation.
@@ -91,7 +93,7 @@ class UserEdition(Resource):
 
         df_usuarios.to_csv(ruta_table_usuarios, sep=';', index=False)
         
-        agregar_log_edicion_usuario(data['usuario'])
+        agregar_log_edicion_usuario(data['usuario'],fecha_modificacion)
 
         return jsonify({'message': 'Data edited successfully!'})
     
