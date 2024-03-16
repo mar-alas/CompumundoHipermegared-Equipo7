@@ -16,10 +16,10 @@ ruta_logs_auditor_csv="seguridad/microservicios/base_datos/table_logs_login_audi
 #            os.remove(ruta_logs_auditor_csv)
 
 ruta_login_logs="seguridad/microservicios/base_datos/table_login_logs.csv"
-login_logs = pd.read_csv(ruta_login_logs, sep=';')
+
 
 def revision_logins_no_exitosos():
-
+    login_logs = pd.read_csv(ruta_login_logs, sep=';')
     logins_no_exitosos = login_logs[login_logs['login_exitoso'] == 0]
     logins_no_exitosos_por_usuario = logins_no_exitosos['usuario'].value_counts()
     logins_no_exitosos_por_usuario_sospechosos = logins_no_exitosos_por_usuario[logins_no_exitosos_por_usuario > umbral_login_no_exitoso]
