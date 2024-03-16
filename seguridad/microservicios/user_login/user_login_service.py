@@ -1,3 +1,6 @@
+#revisar si se debe ejectuar este comando en consola antes de usar:
+#export PYTHONPATH=$PWD/seguridad:$PYTHONPATH
+
 from flask import Flask, request, jsonify, abort
 from flask_restful import Resource, reqparse
 from queue_user_login import insert_user_in_logs

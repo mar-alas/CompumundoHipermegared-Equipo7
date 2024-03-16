@@ -1,3 +1,4 @@
+#se corre desde la carpeta de user_login
 #this celery runs with the command: celery -A queue_user_login worker --loglevel=info
 from celery import Celery
 import os
