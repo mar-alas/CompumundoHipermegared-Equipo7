@@ -1,8 +1,10 @@
 #autor: daniel
 # script que corre experimento de edicion no autorizada en la base de datos
+#este script se corre desde la carpeta de seguridad
+#con el comando python3 pruebas_experimento/experimento_integridad_003_edicion_no_autorizada.py
 
 import os
-os.chdir("seguridad/pruebas_experimento")
+#os.chdir("seguridad")
 
 from experimento_utils import setup_experimento
 from experimento_utils import teardown_experimento
@@ -13,7 +15,7 @@ import time
 import pandas as pd
 from faker import Faker
 
-ruta_resultado_experimento="resultados_experimentos/resultados_experimento_integridad_003_edicion_no_autorizada.csv"
+ruta_resultado_experimento="pruebas_experimento/resultados_experimentos/resultados_experimento_integridad_003_edicion_no_autorizada.csv"
 fecha_experimento=time.strftime("%Y-%m-%d %H:%M:%S")
 fecha_experimento_menos1dia=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()-86400))
 setup_experimento()

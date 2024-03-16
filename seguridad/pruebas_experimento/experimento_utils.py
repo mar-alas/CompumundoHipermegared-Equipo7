@@ -3,24 +3,24 @@
 
 import os
 try:
-    os.chdir("seguridad/pruebas_experimento")
+    os.chdir("seguridad")
 except:
     pass
 
 import pandas as pd
 import time
 
-ruta_tabla_usuarios= "../microservicios/base_datos/table_usuarios.csv"
+ruta_tabla_usuarios= "./microservicios/base_datos/table_usuarios.csv"
 
 def borrar_archivos_previo_experimento():
     """
     Borra la data que se quiere revisar por separado en cada experimento
     """
     file_paths = [
-        "../microservicios/base_datos/table_login_logs.csv"
-        ,"../microservicios/base_datos/table_logs_edit_audit_monitor.csv"
-        ,"../microservicios/base_datos/table_logs_login_audit_monitor.csv"
-        ,"../microservicios/base_datos/table_usuario_edicion_logs.csv"
+        "./microservicios/base_datos/table_login_logs.csv"
+        ,"./microservicios/base_datos/table_logs_edit_audit_monitor.csv"
+        ,"./microservicios/base_datos/table_logs_login_audit_monitor.csv"
+        ,"./microservicios/base_datos/table_usuario_edicion_logs.csv"
         ,ruta_tabla_usuarios
     ]
 
@@ -62,7 +62,7 @@ def detectar_modificacion_sin_autorizacion_bd(usuario):
     """
     Función que detecta si la base de datos fue modificada sin autorización
     """
-    ruta_logs_edit_monitor = "../microservicios/base_datos/table_logs_edit_audit_monitor.csv"
+    ruta_logs_edit_monitor = "./microservicios/base_datos/table_logs_edit_audit_monitor.csv"
     logs_edit_monitor = pd.read_csv(ruta_logs_edit_monitor, sep=";",header=0)
     logs_edit_monitor_usuario = logs_edit_monitor[logs_edit_monitor['usuario'] == usuario]
     
