@@ -51,6 +51,7 @@ class Userlogin(Resource):
 
         print("validar_request")
         validation_result = validar_request(username, password, code)
+        print("validation_result: ", validation_result)
 
         if validation_result != 'OK':
             insert_user_in_logs(username, 1)
@@ -58,10 +59,10 @@ class Userlogin(Resource):
 
         if validar_datos_usuario(username, password):
             if validar_codigo(code):
-                insert_user_in_logs(username, 0)
+                insert_user_in_logs(username, 1)
                 return {'message': 'Login successful!'}, 200
             else:
-                insert_user_in_logs(username, 1)
+                insert_user_in_logs(username, 0)
                 return {'message': 'Invalid code!'}, 401
         else:
             insert_user_in_logs(username, 1)
