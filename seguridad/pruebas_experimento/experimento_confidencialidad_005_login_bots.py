@@ -2,9 +2,10 @@ import requests
 import csv
 from datetime import datetime
 import os
+import random
 
 url = 'http://localhost:5000/login'
-n_requests = 100
+n_requests = 1000
 
 login_data_template = {
     "username": "robert@gmail.com",
@@ -12,16 +13,16 @@ login_data_template = {
     "code": "424496"
 }
 
-xss_scripts = [
-    "<script>alert('XSS1')</script>",
-    "onmouseenter=alert(3)",
-    "setTimeout('alert(5)', 0)",
-    "<script>alert('')</script>",
-    "onload=alert(3)",
-    "javascript:void(window.alert('XSS5'))"
+bot_user_agents = [
+    "Googlebot/2.1 (+http://www.google.com/bot.html)",
+    "Mozilla/5.0 (compatible; Bingbot/2.0; +http://www.bing.com/bingbot.htm)",
+    "Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)",
+    "DuckDuckBot/1.0; (+http://duckduckgo.com/duckduckbot.html)",
+    "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)",
+    "Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)"
 ]
 
-csv_file_name = 'pruebas_experimento/resultados_experimentos/experimento_integridad_001_XSS.csv'
+csv_file_name = 'pruebas_experimento/resultados_experimentos/experimento_confidencialidad_005_login_bots.csv'
 
 if not os.path.exists('resultados_experimentos'):
     os.makedirs('resultados_experimentos')
@@ -33,24 +34,22 @@ with open(csv_file_name, mode='w', newline='', encoding='utf-8') as file:
     writer.writerow(csv_headers)
 
     for i in range(n_requests):
-        malicious_username = f"robert{xss_scripts[i % len(xss_scripts)]}@gmail.com"
+
         login_data = login_data_template.copy()
-        login_data['username'] = malicious_username
-        
         headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+            'User-Agent': random.choice(bot_user_agents)
         }
         response = requests.post(url, json=login_data, headers=headers)
 
         csv_data = [
-            datetime.now().strftime('%d/%m/%Y'),
-            'experimento_integridad_001_XSS',
-            'integridad', 
+            datetime.now().strftime('%d/%m/%Y'), 
+            'experimento_confidencialidad_005_login_bots',
+            'confidencialidad',
             i + 1,
             str(login_data),
             response.text,
             'status_code',
-            400,
+            403,
             response.status_code,
             1
         ]

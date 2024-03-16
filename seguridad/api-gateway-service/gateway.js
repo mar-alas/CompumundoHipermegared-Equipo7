@@ -3,21 +3,21 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 const ipfilter = require('express-ipfilter').IpFilter;
 const rateLimit = require('express-rate-limit');
 const sqlInjection = require('sql-injection');
-// const spiderDetector = require('express-spider-middleware');
 const expressSpiderMiddleware = require('express-spider-middleware')
-// const xssSanitizer = require('express-xss-sanitizer');
-const xss = require('xss-clean');
+const attackDetection = require('xss-attack-detection');
+const xss_detect = new attackDetection.xssAttackDetection();
 require('dotenv').config();
 
 const app = express();
 const port = 5000;
+// app.use(express.json()); 
 
 // 1. IP Filter
+// const ipsPermitidas = ['190.165.88.228'];
 const ipsPermitidas = ['::ffff:127.0.0.1', '::1'];
 app.use(ipfilter(ipsPermitidas, { mode: 'allow' }));
 
 // 2. Rate Limiter
-// login
 const loginLimiter = rateLimit({
   windowMs: Number(process.env.LOGIN_LIMITER_WINDOW_MS),
   max: Number(process.env.LOGIN_LIMITER_MAX),
@@ -26,11 +26,20 @@ const loginLimiter = rateLimit({
   legacyHeaders: false,
 });
 
+// 3. SQL Injection
+// app.use(sqlInjection);
 
 // 4. Bot Detector
 app.use(expressSpiderMiddleware.middleware())
+
 // 5. XSS
-app.use(xss());
+const xssDetectionMiddleware = (req, res, next) => {
+  const { username } = req.body;
+  if (xss_detect.detect(username).gist === 'malicious') {
+    return res.status(400).send('Se detectó un intento de XSS Cross-Site Scripting.');
+  }
+  next();
+};
 
 
 // Validación de bot
