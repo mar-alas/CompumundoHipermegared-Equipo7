@@ -1,19 +1,7 @@
 # Microservicio para autenticación con segundo factor para deportista
 Este es el repositorio de trabajo del equipo #7 para la asignatura de Arquitecturas Agiles de Software.
 
-## Indice
-* [Instrucciones Correr Programa](#instrucciones-programa)
-* [Integrantes](#integrantes)
-* [Modelo de componentes](#mod-componentes)
 
-<a id="instrucciones-programa"></a>
-## Instrucciones para correr programa
-
-1. Realizar las configuraciones iniciales de los programas
-2. Correr el api gateway
-3. Correr el servicio de login
-
-<a id="integrantes"></a>
 ## Integrantes
 
 
